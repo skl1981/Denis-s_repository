@@ -1,0 +1,6 @@
+$Registry_Path_Port = "HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL12.SQL2\MSSQLServer\SuperSocketNetLib\Tcp\IPAll"
+$Ports_Numbers = (Get-ItemProperty -Path $Registry_Path_Port).TcpPort
+$FireWallRuleInbound = New-NetFirewallRule -DisplayName "SQL_Server_Inbound_Rule" -Direction Inbound -Protocol TCP -LocalPort $Ports_Numbers -Action Allow
+$FireWallRuleOutbound = New-NetFirewallRule -DisplayName "SQL_Server_Outbound_Rule" -Direction Outbound -Protocol TCP -LocalPort $Ports_Numbers -Action Allow
+$FirewallCheckStatus = Get-NetFirewallRule -DisplayName "CheckFirewallStatus" -ErrorAction SilentlyContinue
+if($null -eq $FirewallCheckStatus){$FirewallCheckStatus = (New-NetFirewallRule -DisplayName "SQL_Server_Corrected_Rule" -Protocol UDP -LocalPort 1434 -Action Allow)}
