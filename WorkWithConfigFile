@@ -6,4 +6,9 @@ $configurationFileContent = Get-Content -Path $configurationFilePath
 $InstanceName = "Test_Name"
 $configurationFileContent = $configurationFileContent -replace '(instancename=).*', "`$1`"$InstanceName`""
 $configurationFileContent = $configurationFileContent -replace '(agtsvcaccount=).*', "`$1`"NT Service\SQLAgent`$$InstanceName`""
+$administratorAccountName = (Get-LocalGroupMember -Group "Administrators")[0].Name
+$configurationFileContent = $configurationFileContent -replace '(sqlsysadminaccounts=).*', "`$1`"$administratorAccountName`""
+$configurationFileContent = $configurationFileContent -replace '(sqlbackupdir=).*', "`$1`"E:\Microsoft SQL Server\MSSQL12.$InstanceName\MSSQL\Backup`""
+$configurationFileContent = $configurationFileContent -replace '(sapwd=).*', "`$1`"$SaUserPassword`""
+Set-Content -Path $configurationFilePath -Value $configurationFileContent
 
