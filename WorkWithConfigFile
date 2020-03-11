@@ -1,0 +1,9 @@
+$configurationFilePath = "F:\ConfigurationFile_Install.ini"
+if(!(Get-Item -Path $configurationFilePath).Exists){
+    throw "Base configuration file is not found. Navigate to the script directory and run it again."
+}
+$configurationFileContent = Get-Content -Path $configurationFilePath
+$InstanceName = "Test_Name"
+$configurationFileContent = $configurationFileContent -replace '(instancename=).*', "`$1`"$InstanceName`""
+$configurationFileContent = $configurationFileContent -replace '(agtsvcaccount=).*', "`$1`"NT Service\SQLAgent`$$InstanceName`""
+
