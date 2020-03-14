@@ -1,0 +1,4 @@
+$password = ConvertTo-SecureString '12#QWEasd' -AsPlainText -Force 
+#Test-connection ADDC.local
+$Credential = New-Object PSCredential -ArgumentList "ADDC\Administrator", $password
+Add-Computer -DomainName ADDC.local -UnjoinDomainCredential $Credential
