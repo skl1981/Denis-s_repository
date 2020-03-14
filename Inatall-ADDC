@@ -1,0 +1,19 @@
+#Get-WindowsFeature -Name ad-domain-services | Install-WindowsFeature
+#$password = ConvertTo-SecureString '12#QWEad' -AsPlainText -Force
+#Install-ADDSForest -DomainName ADDC.local -SafeModeAdministratorPassword $password -Confirm:$false
+#get-command -module activedirectory
+#get-ADForest
+#get-addomain
+#Get-ADDomainController -Server ADDCTest
+#Get-ADComputer WorkStation
+#Get-WindowsFeature -Name ad-domain-services,dns -ComputerName WorkStation
+#Add-WindowsFeature -Name ad-domain-services,dns -ComputerName WorkStation
+
+Invoke-Command -ComputerName WorkStation -ScriptBlock {
+    $Password = ConvertTo-SecureString '12#QWEasd' -AsPlainText -Force;
+    $Credential = New-Object -TypeName pscredential -ArgumentList "ADDC\Administrator", $Password;
+    Install-ADDSDomainController -DomainName "ADDC.local" `
+                    -SafeModeAdministratorPassword $Password `
+                    -Credential $Credential `
+                    -Confirm:$false
+}
