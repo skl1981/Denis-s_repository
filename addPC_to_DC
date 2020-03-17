@@ -2,3 +2,13 @@ $password = ConvertTo-SecureString '12#QWEasd' -AsPlainText -Force
 #Test-connection ADDC.local
 $Credential = New-Object PSCredential -ArgumentList "ADDC\Administrator", $password
 Add-Computer -DomainName ADDC.local -UnjoinDomainCredential $Credential
+#New-ADUser -Name Skakalski -SamAccountName Skakalski1 -AccountPassword '12#QWEasd'
+#Get-ADUser -Filter * | Where-Object {$_.Name -like "Ska*"}
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Name -like "Ska*"}
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Name -like "Ska*"} | Set-ADUser -State "WA"
+#Get-ADUser -Identity Skakalski -Properties * | Select-Object badpasswordattempt
+#Get-ADUser -Identity Skakalski -Properties * | Select-Object badpasswordcount
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Enabled -like "FALSE"} | select Name, Path
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "FALSE"} | select Name, Path
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "TRUE"} | Set-ADUser -PasswordNeverExpires $true
+Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "FALSE"} | Select-Object Name, PasswordNeverExpires
