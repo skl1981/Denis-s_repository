@@ -12,3 +12,8 @@ Add-Computer -DomainName ADDC.local -UnjoinDomainCredential $Credential
 #Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "FALSE"} | select Name, Path
 #Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "TRUE"} | Set-ADUser -PasswordNeverExpires $true
 Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "FALSE"} | Select-Object Name, PasswordNeverExpires
+#New-ADOrganizationalUnit -Name Test_Unit -Path "DC=Skakalski1,DC=local"
+#New-ADGroup -Name "TestGroup" -SamAccountName Testing -GroupCategory Security -GroupScope Global -Path "CN=Users,DC=SKAKALSKI1,DC=local" -Description "Members of this group are for testing"
+#New-ADUser -Name "Denis Skakalski" -SamAccountName "DSkakalski" -DisplayName "Denis Skakalski" -GivenName "Denis" -Surname "Skakalski" -Path "OU=Test_Unit,DC=SKAKALSKI1,DC=local" -AccountPassword(ConvertTo-SecureString "12#QWEasd" -AsPlainText -Force) -ChangePasswordAtLogon $true -Enabled $true
+net localgroup "Remote Desktop Users"
+net localgroup "Remote Desktop Users" /add skakalski1.local\DSkakalski
