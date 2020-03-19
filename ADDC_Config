@@ -1,0 +1,31 @@
+#New-ADUser -Name Skakalski -SamAccountName Skakalski1 -AccountPassword '12#QWEasd'
+#Get-ADUser -Filter * | Where-Object {$_.Name -like "Ska*"}
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Name -like "Ska*"}
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Name -like "Ska*"} | Set-ADUser -State "WA"
+#Get-ADUser -Identity Skakalski -Properties * | Select-Object badpasswordattempt
+#Get-ADUser -Identity Skakalski -Properties * | Select-Object badpasswordcount
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Enabled -like "FALSE"} | select Name, Path
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "FALSE"} | select Name, Path
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "TRUE"} | Set-ADUser -PasswordNeverExpires $true
+Get-ADUser -Filter * -Properties * | Where-Object {$_.PasswordExpired -like "FALSE"} | Select-Object Name, PasswordNeverExpires
+#New-ADOrganizationalUnit -Name Test_Unit -Path "DC=Skakalski1,DC=local"
+#New-ADGroup -Name "TestGroup" -SamAccountName Testing -GroupCategory Security -GroupScope Global -Path "CN=Users,DC=SKAKALSKI1,DC=local" -Description "Members of this group are for testing"
+#New-ADUser -Name "Denis Skakalski" -SamAccountName "DSkakalski" -DisplayName "Denis Skakalski" -GivenName "Denis" -Surname "Skakalski" -Path "OU=Test_Unit,DC=SKAKALSKI1,DC=local" -AccountPassword(ConvertTo-SecureString "12#QWEasd" -AsPlainText -Force) -ChangePasswordAtLogon $true -Enabled $true
+net localgroup "Remote Desktop Users"
+net localgroup "Remote Desktop Users" /add skakalski1.local\DSkakalski
+New-ADUser –Name “Test User2” –SamAccountName "Test_User2” -GivenName “Test” –Surname “User2” –DisplayName “Test_User2” –UserPrincipalName Test_User2@Skakalski1.local –Path ‘OU=Test_Unit,DC=Skakalski1, DC=local’ -Description "For testing"
+Get-ADUser Test_User2 | Set-ADAccountPassword -Reset -NewPassword(ConvertTo-SecureString -AsPlainText "12#QWEasd" -Force)
+#Get-ADUser Test_User2 | Enable-ADAccount
+Get-ADUser Test_User2 | Set-ADUser -ChangePasswordAtLogon $true
+#New-ADUser –Name “Test User2” –SamAccountName "Test_User2” -GivenName “Test” –Surname “User2” –DisplayName “Test_User2” –UserPrincipalName Test_User2@Skakalski1.local –Path ‘OU=Test_Unit,DC=Skakalski1, DC=local’ -Description "For testing"
+#Get-ADUser Test_User2 | Set-ADAccountPassword -Reset -NewPassword(ConvertTo-SecureString -AsPlainText "12#QWEasd" -Force)
+#Get-ADUser Test_User2 | Enable-ADAccount
+#Get-ADUser Test_User2 | Set-ADUser -ChangePasswordAtLogon $true
+#Get-ADUser -Filter * -Properties * | Where-Object {$_.Enabled -like "TRUE"} | select Name, Path
+#Get-Aduser –filter {department –like “managers”} –Properties  ‘description’
+#Get-ADUser -Filter {department -like "Testing"} -Properties 'description' | FT 'Name', 'decription'
+Get-ADUser -Filter {department -like "Testing"} | Set-ADUser -Description 'We are working for testing'
+#New-ADServiceAccount -Name Test_Account1 -RestrictToSingleComputer
+#Add-ADComputerServiceAccount -Identity Skakalski1 -ServiceAccount Test_Account1
+Get-ADServiceAccount -Filter {Name -like "*"} | Format-Table 'Name', 'HostComputers' -AutoSize
+dsadd group "CN=Auditors,OU=TestRole1,OU=TestGroups1,DC=Skakalski1,DC=local" -secgrp yes -scope g
