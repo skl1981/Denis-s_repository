@@ -1,0 +1,7 @@
+$ADDC_Rule_TCP = New-NetFirewallRule -DisplayName "ADDC_Rule_TCP" -Direction Inbound -Protocol TCP -LocalPort 88,135,139,389,445,464,3268,3269,53,80 -Action Allow
+$ADDC_Rule_UDP = New-NetFirewallRule -DisplayName "ADDC_Rule_UDP" -Direction Inbound -Protocol UDP -LocalPort 88,135,138,389,445,464,53 -Action Allow
+
+#Write-Host "`nCreated Firewall Rules:" 
+$ADDC_Rule_TCP, $ADDC_Rule_UDP | Format-List -Property DisplayName, Direction, Action,`
+@{l="Protocol";e={($_| Get-NetFirewallPortFilter).Protocol}},
+@{l="Protocol";e={($_| Get-NetFirewallPortFilter).LocalPort}}
