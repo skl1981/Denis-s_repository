@@ -3,3 +3,4 @@
 #New-SmbShare -Name Shared -Path C:\Users\Administrator\Desktop\share-folder1 -CimSession Skakalski3 -FullAccess Everyone -Description "Shared_Folder"
 #get-service -Name "FDResPub", "SSDPSRV", "upnphost" | Set-Service -StartupType Automatic -PassThru | Start-Service
 netsh advfirewall firewall set rule group="Network Discovery" new enable=Yes
+dddd
