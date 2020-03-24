@@ -4,3 +4,4 @@ $FireWallRuleInbound = New-NetFirewallRule -DisplayName "SQL_Server_Inbound_Rule
 $FireWallRuleOutbound = New-NetFirewallRule -DisplayName "SQL_Server_Outbound_Rule" -Direction Outbound -Protocol TCP -LocalPort $Ports_Numbers -Action Allow
 $FirewallCheckStatus = Get-NetFirewallRule -DisplayName "CheckFirewallStatus" -ErrorAction SilentlyContinue
 if($null -eq $FirewallCheckStatus){$FirewallCheckStatus = (New-NetFirewallRule -DisplayName "SQL_Server_Corrected_Rule" -Protocol UDP -LocalPort 1434 -Action Allow)}
+New-NetFirewallRule -DisplayName "Inbound_Rule_icmp" -Direction Inbound -Protocol icmpv4 -Action allow
