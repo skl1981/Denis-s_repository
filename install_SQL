@@ -1,29 +1,28 @@
 [CmdletBinding()]
 
 param (
+    [Parameter(Mandatory=$true)]
+    [string]
+    $VM_Name
 
     [Parameter(Mandatory=$true)]
-
     [string]
-
     $InstanceName,
 
-
-
     [Parameter(Mandatory=$true)]
-
     [string]
-
     $SaUserPassword,
-
-
+    
 
     [string]
-
     $SqlServerIsoPath="E:\SQLServer2014SP3-FullSlipstream-x64-ENU.iso"
-
 )
 
+start-VM $VM_Name
+
+$Password = ConvertTo-SecureString '12#QWEasd' -AsPlainText -Force;
+$Credential = New-Object -TypeName pscredential -ArgumentList "Administrator", $Password;
+Enter-PSSession -ComputerName 192.168.137.5 -Credential $Credential 
 
 
 # Import sqlserver and netsecurity modules
