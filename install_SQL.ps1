@@ -1,9 +1,8 @@
 [CmdletBinding()]
-
 param (
     [Parameter(Mandatory=$true)]
     [string]
-    $VM_Name
+    $VM_Name,
 
     [Parameter(Mandatory=$true)]
     [string]
@@ -12,18 +11,29 @@ param (
     [Parameter(Mandatory=$true)]
     [string]
     $SaUserPassword,
-    
 
+    [Parameter(Mandatory=$true)]
+    [string]
+    $PC_ip_address,
+
+    [Parameter(Mandatory=$true)]
+    [string]
+    $Login,
+
+    [Parameter(Mandatory=$true)]
+    [string]
+    $Password,
+    
     [string]
     $SqlServerIsoPath="E:\SQLServer2014SP3-FullSlipstream-x64-ENU.iso"
-)
+    )
 
-start-VM $VM_Name
+#start-VM $VM_Name
 
-$Password = ConvertTo-SecureString '12#QWEasd' -AsPlainText -Force;
-$Credential = New-Object -TypeName pscredential -ArgumentList "Administrator", $Password;
-Enter-PSSession -ComputerName 192.168.137.5 -Credential $Credential 
-
+$Password = ConvertTo-SecureString $Password -AsPlainText -Force;
+$Credential = New-Object -TypeName pscredential -ArgumentList "$Login", $Password;
+Enter-PSSession -ComputerName $PC_ip_address -Credential $Credential
+Add-WindowsFeature -Name Net-framework-core -Source D:\sources\sxs
 
 # Import sqlserver and netsecurity modules
 
