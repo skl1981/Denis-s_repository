@@ -10,7 +10,7 @@ param (
     [string]
     $PC_Name
     )
-Enable-PSRemoting -SkipNetworkProfileCheck
+#Enable-PSRemoting -SkipNetworkProfileCheck
 $Password = ConvertTo-SecureString $Password -AsPlainText -Force;
 $Credential = New-Object -TypeName pscredential -ArgumentList "$Login", $Password;
 Invoke-command -ScriptBlock {mkdir C:\Users\Administrator\Desktop\share-folder1;`
